@@ -1,5 +1,6 @@
 import carRouter from './CarRouter';
+import motorcycleRouter from './MotorcycleRouter';
 
-const routes = { carRouter };
+const routes = { carRouter, motorcycleRouter };
 
 export default routes;

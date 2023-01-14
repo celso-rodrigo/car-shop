@@ -5,6 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/cars', routes.carRouter);
+app.use('/motorcycles', routes.motorcycleRouter);
 
 app.use((_error: Error, _req: Request, res: Response, _next: NextFunction) => {
   res.status(500).json({ message: 'Internal Server Error' });
