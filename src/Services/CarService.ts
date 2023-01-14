@@ -34,6 +34,12 @@ class CarService {
     if (result === null) return null;
     return this.formatQueryResult(result);
   }
+
+  async updateById(id: string, carProperties: ICar): Promise<undefined | null> {
+    const carODM = new CarODM();
+    const result = await carODM.updateCarById(id, carProperties);
+    if (result === null) return null;
+  }
 }
 
 export default CarService;

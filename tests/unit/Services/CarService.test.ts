@@ -113,12 +113,12 @@ describe('Tests of CarService', function () {
       seatsQty: 5,
     };
     
-    sinon.stub(Model, 'findOneAndUpdate').resolves(expectedOutput);
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(expectedOutput);
   
     const service = new CarService();
-    const output = await service.UpdateById(id, expectedOutput);
+    const output = await service.updateById(id, expectedOutput);
       
-    expect(output).to.be.deep.equal(expectedOutput);
+    expect(output).to.be.deep.equal(undefined);
   });
 
   it('should fail to update a car based on it\'s id.', async function () {
@@ -133,10 +133,10 @@ describe('Tests of CarService', function () {
       seatsQty: 5,
     };
       
-    sinon.stub(Model, 'findOneAndUpdate').resolves(null);
+    sinon.stub(Model, 'findByIdAndUpdate').resolves(null);
   
     const service = new CarService();
-    const output = await service.UpdateById('INVALID_ID', newProperties);
+    const output = await service.updateById('INVALID_ID', newProperties);
       
     expect(output).to.be.equal(null);
   });

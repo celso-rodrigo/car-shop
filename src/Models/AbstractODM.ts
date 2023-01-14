@@ -20,11 +20,11 @@ abstract class AbstractODM<T> {
     return this.model.create({ ...obj });
   }
 
-  async findAll() {
+  async findAll(): Promise<T[]> {
     return this.model.find();
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<T | null> {
     return this.model.findById(id);
   }
 }

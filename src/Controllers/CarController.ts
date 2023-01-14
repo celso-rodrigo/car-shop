@@ -15,11 +15,15 @@ class CarController {
     this._service = new CarService();
   }
 
+  private formatCar(): ICar {
+    const { model, year, color, buyValue, doorsQty, seatsQty } = this._req.body;
+    return {
+      model, year, color, buyValue, doorsQty, seatsQty, status: this._req.body.status || false };
+  }
+
   async create(): Promise<void> {
     try {
-      const { model, year, color, buyValue, doorsQty, seatsQty } = this._req.body;
-      const car: ICar = {
-        model, year, color, buyValue, doorsQty, seatsQty, status: this._req.body.status || false };
+      const car = this.formatCar();
       const result = await this._service.create(car);
       this._res.status(201).json(result);
     } catch (err) {
@@ -39,11 +43,21 @@ class CarController {
   async findById(): Promise<Response | void> {
     try {
       const { id } = this._req.params;
-      const idRegex = /^[a-f\d]{24}$/i;
-      if (!idRegex.test(id)) return this._res.status(422).json({ message: 'Invalid mongo id' });
       const result = await this._service.findById(id);
       if (result === null) return this._res.status(404).json({ message: 'Car not found' });
       return this._res.status(200).json(result);
+    } catch (err) {
+      this._next(err);
+    }
+  }
+
+  async updateById(): Promise<Response | void> {
+    try {
+      const { id } = this._req.params;
+      const car = this.formatCar();
+      const result = await this._service.updateById(id, car);
+      if (result === null) return this._res.status(404).json({ message: 'Car not found' });
+      return this._res.status(200).json({ id, ...car });
     } catch (err) {
       this._next(err);
     }
