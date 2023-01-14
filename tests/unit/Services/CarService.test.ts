@@ -91,11 +91,52 @@ describe('Tests of CarService', function () {
     expect(output).to.be.deep.equal(expectedOutput);
   });
 
-  it('should failt to get a car based on it\'s id.', async function () {
+  it('should fail to get a car based on it\'s id.', async function () {
     sinon.stub(Model, 'findById').resolves(null);
   
     const service = new CarService();
     const output = await service.findById('INVALID_ID');
+      
+    expect(output).to.be.equal(null);
+  });
+
+  it('should update a car based on it\'s id.', async function () {
+    const id = '63c2a9020044677f9039a4f5';
+    const expectedOutput: ICar = {
+      id,
+      model: 'Marea',
+      year: 1992,
+      color: 'Red',
+      status: true,
+      buyValue: 12.000,
+      doorsQty: 2,
+      seatsQty: 5,
+    };
+    
+    sinon.stub(Model, 'findOneAndUpdate').resolves(expectedOutput);
+  
+    const service = new CarService();
+    const output = await service.UpdateById(id, expectedOutput);
+      
+    expect(output).to.be.deep.equal(expectedOutput);
+  });
+
+  it('should fail to update a car based on it\'s id.', async function () {
+    const newProperties: ICar = {
+      id: '63c2a9020044677f9039a4f5',
+      model: 'Marea',
+      year: 1992,
+      color: 'Red',
+      status: true,
+      buyValue: 12.000,
+      doorsQty: 2,
+      seatsQty: 5,
+    };
+      
+    sinon.stub(Model, 'findOneAndUpdate').resolves(null);
+  
+    const service = new CarService();
+    const output = await service.UpdateById('INVALID_ID', newProperties);
       
     expect(output).to.be.equal(null);
   });
