@@ -11,7 +11,7 @@ describe('Tests of Motorcycle Service', function () {
 
   it('should save a new Motorcycle.', async function () {
     const requestInput: IMotorcycle = {
-      model: 'Honda Cb 600f Hornet',
+      model: 'Honda',
       year: 2005,
       color: 'Yellow',
       status: true,
@@ -22,7 +22,7 @@ describe('Tests of Motorcycle Service', function () {
 
     const expectedOutput: IMotorcycle = {
       id: '63c2ca03e01359077ec0d7b0',
-      model: 'Honda Cb 600f Hornet',
+      model: 'Honda Hornet',
       year: 2005,
       color: 'Yellow',
       status: true,
