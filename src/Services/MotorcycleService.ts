@@ -1,6 +1,6 @@
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcycle from '../Interfaces/IMotorcycle';
-import MotorcycleODM from '../Models/CarODM copy';
+import MotorcycleODM from '../Models/MotorcycleODM';
 
 class MotorcycleService {
   private formatQueryResult(queryResult: IMotorcycle) {
@@ -33,6 +33,12 @@ class MotorcycleService {
     const result = await motorcycleODM.findById(id); 
     if (result === null) return result; 
     return this.formatQueryResult(result);
+  }
+
+  async updateById(id: string, motorCycleProperties: IMotorcycle): Promise<null | void> {
+    const motorcycleODM = new MotorcycleODM();
+    const result = await motorcycleODM.updateMotorcycleById(id, motorCycleProperties); 
+    if (result === null) return result;
   }
 }
 
